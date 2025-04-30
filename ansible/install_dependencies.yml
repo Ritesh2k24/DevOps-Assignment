@@ -1,0 +1,55 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start and Enable Docker
+      service:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Initialize Docker Swarm
+      shell: docker swarm init --advertise-addr $(hostname -I | awk '{print $1}')
+      ignore_errors: yes
+
+    - name: Create NGINX reverse proxy config
+      copy:
+        dest: /etc/nginx/sites-available/yii2.conf
+        content: |
+          server {
+              listen 80;
+              server_name 3.91.66.251;
+
+              location / {
+                  proxy_pass http://localhost:8080;
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+              }
+          }
+
+    - name: Enable NGINX site
+      file:
+        src: /etc/nginx/sites-available/yii2.conf
+        dest: /etc/nginx/sites-enabled/yii2.conf
+        state: link
+
+    - name: Reload NGINX
+      service:
+        name: nginx
+        state: reloaded
