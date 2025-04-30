@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  yii2-app:
+    image: ritesh2k24/yii2-app:latest
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - yii2-network
+
+networks:
+  yii2-network:
