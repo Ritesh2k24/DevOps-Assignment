@@ -1,0 +1,6 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Deploy Yii2 App
+      shell: docker stack deploy -c /home/ubuntu/yii2-app-basic/docker-compose.yml yii2app
