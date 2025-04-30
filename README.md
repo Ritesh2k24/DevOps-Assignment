@@ -75,5 +75,7 @@ Deploy a sample PHP Yii2 application using Docker Swarm and NGINX (host-based re
 
 ![image](https://github.com/user-attachments/assets/1ffabb2a-b1fe-4419-b5e0-33bc686afdb6)
 
+![image](https://github.com/user-attachments/assets/8615f052-58cc-41e0-8a87-8b283f1ab9cb)
+
 
 ![image](https://github.com/user-attachments/assets/e22f20d5-3e8b-4660-939e-5e888fa7b169)
